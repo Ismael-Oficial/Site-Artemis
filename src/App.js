@@ -5,7 +5,7 @@ import Services from './componentes/Services';
 import Equip from './componentes/Equip';
 import Clientes from './componentes/Clientes';
 import Portifolio from './componentes/Portifolio';
-
+import Depoimento from './componentes/Depoimentos';
 import WorkUs from './componentes/WorkUs';
 import Contact from './componentes/Contact';
 
@@ -23,7 +23,7 @@ function App() {
       <Equip />
       <Clientes />
       <Portifolio />
-
+      <Depoimento />
       <div className="for-sale">
         <p>Desconto para pequenas empresas de</p>
         <h2>ATÉ 80% OFF</h2>

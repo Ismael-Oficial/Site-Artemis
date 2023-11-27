@@ -1,49 +1,52 @@
-import Depoimento1 from './imgs/Depoimento1.JPG'
-import Depoimento2 from './imgs/Depoimento2.JPG'
-import Depoimento3 from './imgs/Depoimento3.JPG'
+import React, { useState, useRef, useEffect } from 'react';
+import Depoimento1 from './imgs/Depoimento1.JPG';
+import Depoimento2 from './imgs/Depoimento2.JPG';
+import Depoimento3 from './imgs/Depoimento3.JPG';
 
 function Depoimento() {
-    const carouselWrapper = document.querySelector('.carousel-wrapper');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const slides = document.querySelectorAll('.carousel-slide');
+  const [counter, setCounter] = useState(0);
+  const carouselWrapperRef = useRef(null);
+  const slidesRef = useRef([]);
 
-    let counter = 0;
-    const slideWidth = slides[0].clientWidth;
+  const slideWidth = slidesRef.current.length > 0 ? slidesRef.current[0].clientWidth : 0;
 
-    nextBtn.addEventListener('click', () => {
-        if (counter < slides.length - 1) {
-            counter++;
-            carouselWrapper.style.transform = `translateX(-${counter * slideWidth}px)`;
-        }
-    });
+  const nextSlide = () => {
+    if (counter < slidesRef.current.length - 1) {
+      setCounter(counter + 1);
+    }
+  };
 
-    prevBtn.addEventListener('click', () => {
-        if (counter > 0) {
-            counter--;
-            carouselWrapper.style.transform = `translateX(-${counter * slideWidth}px)`;
-        }
-    });
+  const prevSlide = () => {
+    if (counter > 0) {
+      setCounter(counter - 1);
+    }
+  };
 
-    return (
-        <div class="depoiment">
-            <div class="carousel-container">
-                <div class="carousel-wrapper">
-                    <div class="carousel-slide">
-                        <img src={Depoimento1} alt="" />
-                    </div>
-                    <div class="carousel-slide">
-                        <img src={Depoimento2} alt="" />
-                    </div>
-                    <div class="carousel-slide">
-                        <img src={Depoimento3} alt="" />
-                    </div>
-                </div>
-                <button id="prevBtn">←</button>
-                <button id="nextBtn">→</button>
-            </div>
+  useEffect(() => {
+    if (carouselWrapperRef.current) {
+      carouselWrapperRef.current.style.transform = `translateX(-${counter * slideWidth}px)`;
+    }
+  }, [counter, slideWidth]);
+
+  return (
+    <div className="depoiment">
+      <div className="carousel-container">
+        <div className="carousel-wrapper" ref={carouselWrapperRef}>
+          <div className="carousel-slide" ref={(el) => (slidesRef.current[0] = el)}>
+            <img src={Depoimento1} alt="" />
+          </div>
+          <div className="carousel-slide" ref={(el) => (slidesRef.current[1] = el)}>
+            <img src={Depoimento2} alt="" />
+          </div>
+          <div className="carousel-slide" ref={(el) => (slidesRef.current[2] = el)}>
+            <img src={Depoimento3} alt="" />
+          </div>
         </div>
-    )
+        <button id="prevBtn" onClick={prevSlide}>←</button>
+        <button id="nextBtn" onClick={nextSlide}>→</button>
+      </div>
+    </div>
+  );
 }
 
-export default Depoimento
+export default Depoimento;
